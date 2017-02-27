@@ -10,7 +10,7 @@ import (
 
 	"github.com/tj/go-elastic/batch"
 
-	"github.com/apex/log"
+	"github.com/jiangluu/log"
 )
 
 // TODO(tj): allow dumping logs to stderr on timeout

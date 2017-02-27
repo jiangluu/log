@@ -4,10 +4,10 @@ import (
 	"encoding/base64"
 	"encoding/json"
 
-	"github.com/apex/log"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/kinesis"
+	"github.com/jiangluu/log"
 	"github.com/rogpeppe/fastuuid"
 	k "github.com/tj/go-kinesis"
 )

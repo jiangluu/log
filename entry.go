@@ -7,19 +7,29 @@ import (
 	"time"
 )
 
+const timelayout = "2006-01-02 15:04:05"
+
 // assert interface compliance.
 var _ Interface = (*Entry)(nil)
 
 // Now returns the current time.
 var Now = time.Now
 
+type JSONTime time.Time
+
+func (t JSONTime) MarshalJSON() ([]byte, error) {
+	//do your serializing here
+	stamp := fmt.Sprintf(`"%s"`, time.Time(t).Format(timelayout))
+	return []byte(stamp), nil
+}
+
 // Entry represents a single log entry.
 type Entry struct {
-	Logger    *Logger   `json:"-"`
-	Fields    Fields    `json:"fields"`
-	Level     Level     `json:"level"`
-	Timestamp time.Time `json:"timestamp"`
-	Message   string    `json:"message"`
+	Logger    *Logger  `json:"-"`
+	Fields    Fields   `json:"fields"`
+	Level     Level    `json:"level"`
+	Timestamp JSONTime `json:"timestamp"`
+	Message   string   `json:"message"`
 	start     time.Time
 	fields    []Fields
 }
@@ -160,6 +170,6 @@ func (e *Entry) finalize(level Level, msg string) *Entry {
 		Fields:    e.mergedFields(),
 		Level:     level,
 		Message:   msg,
-		Timestamp: Now(),
+		Timestamp: JSONTime(Now()),
 	}
 }
